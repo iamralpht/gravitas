@@ -13,7 +13,7 @@ These are the physics models implemented here:
 *  Scroll: combines Spring and Friction to implement scrolling with overbounce.
 *  Fall: combines Gravity with a Spring. The value falls until it reaches a threshold (the ground, perhaps) where it bounces (its momentum is rolled into the spring). Letterplex uses this for the dialogs. Bouncing when you hit the ground feels so much better than the alternatives!
 
-LICENSE
+License
 =======
 
 All other code is distributed under the terms below:
