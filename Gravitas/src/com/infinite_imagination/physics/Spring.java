@@ -29,7 +29,22 @@ public class Spring extends Simulation {
 	private Solution solve(float initial, float velocity) {
 		// Solve the quadratic equation; root = (-c +/- sqrt(c^2 - 4mk)) / 2m.
 		float cmk = c * c - 4 * m * k;
-		if (cmk >= 0) {
+        if (cmk == 0) {
+            // The spring is critically damped.
+            // x = (c1 + c2*t) * e^(-c/2m)*t
+            final float r = -c / (2 * m);
+            final float c1 = initial;
+            final float c2 = velocity / (r * initial);
+            return new Solution() {
+                @Override public float x(float t) {
+                    return (float)((c1 + c2 * t) * Math.pow(Math.E, r * t));
+                }
+                @Override public float dx(float t) {
+                    float power = (float) Math.pow(Math.E, r * t);
+                    return (float)(r * (c1 + c2 * t) * power + c2 * power);
+                }
+            };
+        } else if (cmk > 0) {
 			// The spring is overdamped or critically damped; no bounces.
 			// x = c1*e^(r1*t) + c2*e^(r2t)
 			// Need to find r1 and r2, the roots, then solve c1 and c2.
